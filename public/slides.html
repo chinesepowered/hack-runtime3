@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Clock Out — slides</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { --night:#0e1a2b; --night2:#15243a; --text:#eef2f8; --muted:#93a3b8; --punch:#ffd34e; --paid:#2fbf85; --held:#f0a03c; --paper:#fffdf6; }
+  html, body { margin:0; height:100%; background:var(--night); color:var(--text); overflow:hidden;
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  body::before { content:""; position:fixed; inset:0; pointer-events:none;
+    background: radial-gradient(60rem 30rem at 90% -10%, rgba(255,211,78,.12), transparent 65%); }
+  .deck { position:absolute; left:50%; top:50%; width:1600px; height:900px; transform-origin:center; }
+  .slide { position:absolute; inset:0; padding:110px 130px; box-sizing:border-box; display:none; flex-direction:column; justify-content:center; }
+  .slide.on { display:flex; }
+  .eyebrow { font-size:20px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin:0 0 26px; }
+  h1, h2 { font-weight:800; letter-spacing:-.03em; margin:0; }
+  h1 { font-size:140px; line-height:.95; }
+  h2 { font-size:76px; line-height:1.02; margin-bottom:42px; }
+  .y { color:var(--punch); }
+  p.lead { font-size:34px; line-height:1.45; color:var(--muted); max-width:1150px; margin:36px 0 0; }
+  .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:30px; }
+  .stat { background:var(--night2); border:1px solid rgba(236,241,248,.1); border-radius:26px; padding:38px; }
+  .stat b { display:block; font-family: ui-monospace, Menlo, Consolas, monospace; font-size:84px; line-height:1; }
+  .stat span { display:block; font-size:25px; line-height:1.4; color:var(--muted); margin-top:18px; }
+  .src { font-size:17px; color:var(--muted); margin-top:30px; }
+  .flow { display:grid; grid-template-columns:repeat(4,1fr); gap:22px; }
+  .box { background:var(--night2); border:1px solid rgba(236,241,248,.1); border-radius:24px; padding:30px 28px; }
+  .box h3 { font-size:36px; font-weight:800; margin:10px 0 12px; }
+  .box p { font-size:22px; line-height:1.45; margin:0 0 16px; }
+  .box code { font-size:17px; color:var(--paid); display:block; line-height:1.5; }
+  .n { font-family: ui-monospace, Menlo, Consolas, monospace; font-size:46px; color:var(--punch); font-weight:700; }
+  .row { display:flex; gap:18px; margin-top:34px; flex-wrap:wrap; }
+  .tag { font-size:17px; letter-spacing:.08em; text-transform:uppercase; padding:7px 15px; border-radius:99px; color:#10151d; font-weight:700; }
+  ul.big { font-size:32px; line-height:1.6; margin:0; padding-left:1.1em; }
+  ul.big li::marker { color:var(--punch); }
+  .stamp { display:inline-block; font-weight:900; letter-spacing:.12em; font-size:40px; padding:8px 22px; border:6px solid var(--paid); color:var(--paid); border-radius:10px; transform:rotate(-6deg); margin-top:40px; }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <section class="slide">
+    <p class="eyebrow">Runtime NYC · Dynamic · Bankr</p>
+    <h1>Clock out.<br><span class="y">Get paid.</span></h1>
+    <p class="lead">When a shift ends, an agent checks it, splits the tips, and pays the worker — right then — from a Dynamic payroll wallet.</p>
+  </section>
+
+  <section class="slide">
+    <p class="eyebrow">The problem</p>
+    <h2>Workers pay to reach money they’ve already earned.</h2>
+    <div class="stats">
+      <div class="stat"><b class="y">7.2M</b><span>workers used employer-partnered paycheck advances in 2022</span></div>
+      <div class="stat"><b style="color:var(--held)">109.5%</b><span>typical APR on those advances</span></div>
+      <div class="stat"><b style="color:var(--paid)">$22.8B</b><span>of already-earned wages advanced, across 214 million transactions</span></div>
+    </div>
+    <p class="src">CFPB, “Data Spotlight: Developments in the Paycheck Advance Market”, July 18 2024</p>
+  </section>
+
+  <section class="slide">
+    <p class="eyebrow">How it works</p>
+    <h2>Payroll that runs at clock-out.</h2>
+    <div class="flow">
+      <div class="box"><div class="n">1</div><h3>Clock out</h3><p>The worker taps out. That’s all they do.</p><code>POST /api/clockout</code></div>
+      <div class="box"><div class="n">2</div><h3>Verify</h3><p>On schedule, not over, not paid twice, under the cap, payroll can cover it.</p><code>lib/pay.ts · checks()</code></div>
+      <div class="box"><div class="n">3</div><h3>Stub</h3><p>Wages, overtime, tips — and a tip-out that pays the kitchen.</p><code>lib/pay.ts · payStub()</code></div>
+      <div class="box"><div class="n">4</div><h3>Pay or hold</h3><p>Clear: paid now. Off: held with a reason for a manager.</p><code>Dynamic server wallet</code></div>
+    </div>
+    <div class="row">
+      <span class="tag" style="background:var(--paid)">Dynamic server wallet</span>
+      <span class="tag" style="background:var(--punch)">Stablecoin payroll</span>
+      <span class="tag" style="background:#93a3b8">Base Sepolia</span>
+    </div>
+  </section>
+
+  <section class="slide">
+    <p class="eyebrow">Why it matters</p>
+    <h2>The money was never late. The payroll was.</h2>
+    <ul class="big">
+      <li>Paid seconds after the shift — not in two weeks, not for a fee</li>
+      <li>Back of house gets tipped, by hours, every night</li>
+      <li>An agent that pays on its own, and stops itself when something’s off</li>
+      <li>Every payout on-chain, every decision on the stub</li>
+    </ul>
+    <div><span class="stamp">PAID AT CLOCK-OUT</span></div>
+  </section>
+
+</div>
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const deck = document.getElementById('deck');
+  let i = Math.max(0, Math.min(slides.length - 1, (Number(new URLSearchParams(location.search).get('s')) || 1) - 1));
+  function show() { slides.forEach((s, k) => s.classList.toggle('on', k === i)); }
+  function fit() { const s = Math.min(innerWidth / 1600, innerHeight / 900); deck.style.transform = `translate(-50%,-50%) scale(${s})`; }
+  addEventListener('keydown', e => {
+    if (['ArrowRight', ' ', 'PageDown'].includes(e.key)) i = Math.min(slides.length - 1, i + 1);
+    if (['ArrowLeft', 'PageUp'].includes(e.key)) i = Math.max(0, i - 1);
+    show();
+  });
+  addEventListener('resize', fit); fit(); show();
+</script>
+</body>
+</html>

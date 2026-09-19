@@ -1,0 +1,31 @@
+{
+  "name": "clock-out",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Get paid when your shift ends. An agent checks each clock-out, splits the tip pool, and pays instantly from a Dynamic payroll wallet.",
+  "packageManager": "pnpm@11.22.0",
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000",
+    "setup:chain": "node --env-file-if-exists=.env scripts/setup-chain.mjs",
+    "wallet": "node --env-file-if-exists=.env scripts/wallet.mjs"
+  },
+  "dependencies": {
+    "next": "^15.5.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "viem": "^2.21.0"
+  },
+  "optionalDependencies": {
+    "@dynamic-labs-wallet/node-evm": "^1.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.7.0"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "chainId": 84532,
+  "tokens": {
+    "coUSD": {
+      "address": "0x4411ae880e82b08730eec2662004ed6eba49607a",
+      "decimals": 6,
+      "name": "Clock Out Test Dollar (not real money)"
+    }
+  }
+}
