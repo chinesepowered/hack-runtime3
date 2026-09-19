@@ -4,8 +4,8 @@
 stub — wages, overtime, tips, and a tip-out for the kitchen — and pays the worker right then from
 the restaurant's Dynamic payroll wallet. If something doesn't add up, it holds the payout and says why.
 
-**Live demo: [clock-out.vercel.app](CLOCKOUT_URL)** — clocking out there makes a real payout on Base
-Sepolia. · **Video: VIDEO_LINK**
+**Live demo: [clock-out-six.vercel.app](https://clock-out-six.vercel.app)** — clocking out there makes a real payout on Base
+Sepolia. · **Video: [youtu.be/-S2cXQXgL8M](https://youtu.be/-S2cXQXgL8M)**
 
 Built for [Runtime](https://runtime.nyc/) — Dynamic track and the Bankr grand prize.
 
